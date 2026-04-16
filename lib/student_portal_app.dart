@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart'; // For Tab Bar
+import 'package:flutter/material.dart'; // For Tab Bar.
 
 void main() {
   runApp(StudentApp());
