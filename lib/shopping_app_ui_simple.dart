@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; // For Bottom Navigation Bar
 
 void main() {
   runApp(MyApp());
