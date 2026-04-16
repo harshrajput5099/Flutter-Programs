@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';  // For Navigation Drawer
+import 'package:flutter/material.dart';  // For Navigation Drawer.
 
 void main() {
   runApp(CollegeApp());
