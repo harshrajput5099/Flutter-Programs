@@ -1,147 +1,58 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(AdminApp());
+  runApp(MaterialApp(home: Admin()));
 }
 
-class AdminApp extends StatelessWidget {
+class Admin extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AdminHome(),
-    );
-  }
+  State<Admin> createState() => _AdminState();
 }
 
-class AdminHome extends StatefulWidget {
-  @override
-  State<AdminHome> createState() => _AdminHomeState();
-}
+class _AdminState extends State<Admin> {
+  String page = "Dashboard";
 
-class _AdminHomeState extends State<AdminHome> {
-  String selectedPage = "Dashboard";
-
-  void selectPage(String page) {
-    setState(() {
-      selectedPage = page;
-    });
+  void change(String p) {
+    setState(() => page = p);
     Navigator.pop(context);
   }
 
-  Widget getPage() {
-    switch (selectedPage) {
-      case "Users":
-        return Center(child: Text("Users Screen"));
-      case "Reports":
-        return Center(child: Text("Reports Screen"));
-      case "Settings":
-        return Center(child: Text("Settings Screen"));
-      case "Logout":
-        return Center(child: Text("Logged Out"));
-      default:
-        return dashboard();
-    }
-  }
+  Widget getBody() {
+    if (page == "Users") return Center(child: Text("Users"));
+    if (page == "Reports") return Center(child: Text("Reports"));
+    if (page == "Settings") return Center(child: Text("Settings"));
+    if (page == "Logout") return Center(child: Text("Logged Out"));
 
-  // DASHBOARD WITH SUMMARY CARDS
-  Widget dashboard() {
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        children: [
-          summaryCard("Users", "120", Icons.people, Colors.blue),
-          summaryCard("Orders", "75", Icons.shopping_cart, Colors.green),
-          summaryCard("Revenue", "₹50K", Icons.monetization_on, Colors.orange),
-          summaryCard("Reports", "12", Icons.bar_chart, Colors.red),
-        ],
-      ),
-    );
-  }
-
-  Widget summaryCard(
-      String title, String value, IconData icon, Color color) {
-    return Card(
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 40, color: color),
-            SizedBox(height: 10),
-            Text(
-              value,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 5),
-            Text(title),
-          ],
-        ),
-      ),
+    return GridView.count(
+      crossAxisCount: 2,
+      children: [
+        Card(child: Center(child: Text("Users\n120"))),
+        Card(child: Center(child: Text("Orders\n75"))),
+        Card(child: Center(child: Text("Revenue\n₹50K"))),
+        Card(child: Center(child: Text("Reports\n12"))),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Admin Dashboard"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text("Admin Dashboard"), centerTitle: true),
 
       drawer: Drawer(
-        child: ListView(
+        child: Column(
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CircleAvatar(child: Icon(Icons.admin_panel_settings)),
-                  SizedBox(height: 10),
-                  Text(
-                    "Admin Panel",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                ],
-              ),
-            ),
-
-            ListTile(
-              leading: Icon(Icons.dashboard),
-              title: Text("Dashboard"),
-              onTap: () => selectPage("Dashboard"),
-            ),
-            ListTile(
-              leading: Icon(Icons.people),
-              title: Text("Users"),
-              onTap: () => selectPage("Users"),
-            ),
-            ListTile(
-              leading: Icon(Icons.bar_chart),
-              title: Text("Reports"),
-              onTap: () => selectPage("Reports"),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text("Settings"),
-              onTap: () => selectPage("Settings"),
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text("Logout"),
-              onTap: () => selectPage("Logout"),
-            ),
+            DrawerHeader(child: Text("Admin Panel")),
+            ListTile(title: Text("Dashboard"), onTap: () => change("Dashboard")),
+            ListTile(title: Text("Users"), onTap: () => change("Users")),
+            ListTile(title: Text("Reports"), onTap: () => change("Reports")),
+            ListTile(title: Text("Settings"), onTap: () => change("Settings")),
+            ListTile(title: Text("Logout"), onTap: () => change("Logout")),
           ],
         ),
       ),
 
-      body: getPage(),
+      body: getBody(),
     );
   }
 }
