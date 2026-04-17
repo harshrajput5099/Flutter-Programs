@@ -26,7 +26,7 @@ class DrawerScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Center(child: Text("Wel-Come")),
+      body: Center(child: Text("Welcome")),
     );
   }
 }
